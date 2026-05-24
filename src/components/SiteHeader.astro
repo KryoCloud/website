@@ -1,0 +1,53 @@
+---
+class Link {
+    constructor(
+        public label: string,
+        public link: string,
+        public button: boolean = false,
+    ) {}
+}
+
+const links = [
+    new Link("About", "#about"),
+    new Link("Features", "#features"),
+    new Link("Changelogs", "/changelog"),
+    new Link("Docs", "https://docs.kryocloud.eu"),
+    new Link("Start now!", "https://docs.kryocloud.eu/getting-started", true),
+];
+---
+
+<header class="w-full py-6 flex justify-center items-center">
+    <div
+        class="px-8 w-7xl flex justify-between items-center gap-8 bg-(--cryo-surface) border border-(--cryo-frost) rounded-full"
+    >
+        <div class="flex grow items-center gap-1">
+            <img src="/image/logo.png" class="h-16" />
+            <p class="text-xl font-bold">KryoCloud</p>
+        </div>
+        <div class="flex grow justify-end items-center gap-8">
+            {
+                links.map((link) => {
+                    if (link.button) {
+                        return (
+                            <a
+                                href={link.link}
+                                class="px-4 py-2 bg-(--cryo-surface-alt) border border-(--cryo-frost) rounded-lg text-white/50 transition-all duration-300 ease-in-out cursor-pointer hover:text-white hover:font-semibold hover:border-(--cryo-surface-alt)"
+                            >
+                                {link.label}
+                            </a>
+                        );
+                    }
+
+                    return (
+                        <a
+                            href={link.link}
+                            class="text-white/50 transition-all duration-300 ease-in-out cursor-pointer hover:text-white hover:font-semibold"
+                        >
+                            {link.label}
+                        </a>
+                    );
+                })
+            }
+        </div>
+    </div>
+</header>

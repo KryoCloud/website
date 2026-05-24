@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'SpaceGrotesk';
+    src: url("/font/SpaceGrotesk-Regular.ttf");
+}
+
+@layer base {
+
+    :root {
+        /* === Core Colors === */
+        --cryo-bg: #060b14;
+        --cryo-surface: #0d1524;
+        --cryo-surface-alt: #111d30;
+        --cryo-border: #1b2c47;
+
+        /* === Primary Palette === */
+        --cryo-primary: #6fdcff;
+        --cryo-primary-dark: #3cb8e6;
+        --cryo-primary-light: #b9f3ff;
+
+        /* === Accent Colors === */
+        --cryo-accent: #8a7dff;
+        --cryo-accent-soft: #b9b2ff;
+
+        /* === Frost / Ice Effects === */
+        --cryo-frost: rgba(180, 235, 255, 0.08);
+        --cryo-frost-strong: rgba(180, 235, 255, 0.18);
+        --cryo-glow: rgba(111, 220, 255, 0.45);
+
+        /* === Text Colors === */
+        --cryo-text: #e8f7ff;
+        --cryo-text-soft: #9cb8cc;
+        --cryo-text-muted: #648099;
+
+        /* === Status Colors === */
+        --cryo-success: #4fffb0;
+        --cryo-warning: #ffd66f;
+        --cryo-danger: #ff6f91;
+        --cryo-info: #72dfff;
+
+        /* === Shadows === */
+        --cryo-shadow-sm:
+            0 2px 8px rgba(0, 0, 0, 0.25);
+
+        --cryo-shadow-md:
+            0 4px 18px rgba(0, 0, 0, 0.35);
+
+        --cryo-shadow-lg:
+            0 8px 32px rgba(0, 0, 0, 0.5);
+
+        --cryo-shadow-glow:
+            0 0 20px rgba(111, 220, 255, 0.35);
+
+        /* === Gradients === */
+        --cryo-gradient-primary:
+            linear-gradient(135deg,
+                #6fdcff 0%,
+                #8a7dff 100%);
+
+        --cryo-gradient-surface:
+            linear-gradient(180deg,
+                #0d1524 0%,
+                #09111d 100%);
+
+        --cryo-gradient-frost:
+            linear-gradient(135deg,
+                rgba(255, 255, 255, 0.06) 0%,
+                rgba(180, 235, 255, 0.02) 100%);
+
+        /* === Glass Blur === */
+        --cryo-blur: blur(18px);
+
+        /* === Radius === */
+        --cryo-radius-sm: 8px;
+        --cryo-radius-md: 14px;
+        --cryo-radius-lg: 22px;
+        --cryo-radius-xl: 32px;
+
+        /* === Transitions === */
+        --cryo-transition-fast: 120ms ease;
+        --cryo-transition-normal: 220ms ease;
+        --cryo-transition-slow: 420ms ease;
+
+        /* === Optional RGB Helpers === */
+        --cryo-primary-rgb: 111, 220, 255;
+        --cryo-accent-rgb: 138, 125, 255;
+        --cryo-bg-rgb: 6, 11, 20;
+    }
+
+    *,
+    *::before,
+    *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'SpaceGrotesk';
+        color: white;
+    }
+
+    body {
+        @apply w-screen min-h-screen bg-(--cryo-bg)
+    }
+}

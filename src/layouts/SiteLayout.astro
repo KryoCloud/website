@@ -1,0 +1,41 @@
+---
+import "../styles/site.css";
+
+interface Props {
+    title?: string;
+    description?: string;
+}
+
+const {
+  title = "KryoCloud",
+  description = "Modern minecrft cloudsystem.",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/image/logo.png" />
+    <link
+      rel="preload"
+      href="/font/SpaceGrotesk-Regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+  </head>
+  <body
+    class="bg-background text-text antialiased selection:bg-primary selection:text-white"
+  >
+    <div class="flex flex-col min-h-screen">
+      <slot name="header" />
+      <slot name="main" />
+      <slot name="footer" />
+    </div>
+  </body>
+</html>
