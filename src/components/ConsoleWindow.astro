@@ -1,0 +1,70 @@
+---
+interface Props {
+    title?: string;
+    lines: string[];
+    class?: string;
+}
+
+const { title = "node", lines, class: className = '' } = Astro.props;
+---
+
+<div class:list={["console-win bg-(--cryo-bg) border border-(--cryo-border) rounded-(--cryo-radius-lg) overflow-hidden", className]}>
+
+    <!-- topbar -->
+    <div class="relative flex items-center px-4 py-3 bg-(--cryo-surface) border-b border-(--cryo-border)">
+        <!-- macOS buttons -->
+        <div class="flex items-center gap-1.5 z-10">
+            <span class="size-2.5 rounded-full bg-[#ff5f57]"></span>
+            <span class="size-2.5 rounded-full bg-[#febc2e]"></span>
+            <span class="size-2.5 rounded-full bg-[#28c840]"></span>
+        </div>
+        <!-- centered title -->
+        <span class="absolute left-1/2 -translate-x-1/2 code-font text-[0.8rem] text-(--cryo-text-muted) tracking-wide">{title}</span>
+    </div>
+
+    <!-- body -->
+    <div class="console-body px-6 py-5 overflow-x-auto code-font text-[0.8125rem]">
+        {lines.map((line, i) => (
+            <div
+                class="console-line"
+                style={`animation-delay:${(i * 0.07).toFixed(2)}s`}
+                set:html={line}
+            />
+        ))}
+        <div class="console-cursor con-primary mt-1" style={`animation-delay:${(lines.length * 0.07 + 0.2).toFixed(2)}s`}>▋</div>
+    </div>
+
+</div>
+
+<style>
+    .console-body {
+        /* Preserve spaces & indentation within each line */
+        font-variant-ligatures: none;
+    }
+
+    .console-line {
+        opacity: 0;
+        white-space: pre;
+        line-height: 1.75;
+        min-height: 1.75em;
+        animation: con-line-in 0.2s ease forwards;
+    }
+
+    .console-cursor {
+        display: inline-block;
+        color: var(--cryo-primary);
+        opacity: 0;
+        animation: con-cursor-blink 1s step-end infinite;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes con-line-in {
+        from { opacity: 0; transform: translateX(-6px); }
+        to   { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes con-cursor-blink {
+        0%, 100% { opacity: 1; }
+        50%       { opacity: 0; }
+    }
+</style>

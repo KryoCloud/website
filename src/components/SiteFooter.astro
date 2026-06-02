@@ -1,0 +1,39 @@
+---
+const links = [
+    { label: "Documentation", href: "https://docs.kryocloud.eu" },
+    { label: "Changelog",     href: "/changelog" },
+    { label: "GitHub",        href: "https://github.com", external: true },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-(--cryo-border) py-10 bg-(--cryo-surface)">
+    <div class="container">
+        <div class="relative flex items-center gap-8 flex-wrap max-sm:flex-col max-sm:items-start">
+            <div class="flex items-center gap-2 font-bold text-[0.9375rem] text-(--cryo-text)">
+                <img src="/image/logo.png" class="h-7" alt="KryoCloud logo" />
+                <span>KryoCloud</span>
+            </div>
+
+            <nav class="flex gap-6 flex-1">
+                {links.map(({ label, href, external }) => (
+                    <a
+                        href={href}
+                        target={external ? "_blank" : undefined}
+                        rel={external ? "noopener" : undefined}
+                        class="text-[0.875rem] text-(--cryo-text-muted) no-underline transition-colors duration-120 hover:text-(--cryo-text)"
+                    >
+                        {label}
+                    </a>
+                ))}
+            </nav>
+
+            <p class="absolute left-1/2 -translate-x-1/2 text-[0.8125rem] text-(--cryo-text-muted) max-sm:static max-sm:translate-x-0">
+                A member of <a href="https://draconyx.group" class="text-(--cryo-primary) hover:underline">Draconyx Group</a>
+            </p>
+
+            <p class="text-[0.8125rem] text-(--cryo-text-muted)">© {year} KryoCloud. Built for Minecraft networks.</p>
+        </div>
+    </div>
+</footer>

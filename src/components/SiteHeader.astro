@@ -10,44 +10,60 @@ class Link {
 const links = [
     new Link("About", "#about"),
     new Link("Features", "#features"),
-    new Link("Changelogs", "/changelog"),
+    new Link("Changelogs", "/changelogs"),
     new Link("Docs", "https://docs.kryocloud.eu"),
     new Link("Start now!", "https://docs.kryocloud.eu/getting-started", true),
 ];
 ---
 
-<header class="w-full py-6 flex justify-center items-center">
+<header id="site-header" class="fixed top-0 left-0 z-50 w-full py-6 px-6 flex justify-center items-center transition-all duration-300 ease-in-out">
     <div
-        class="px-8 w-7xl flex justify-between items-center gap-8 bg-(--cryo-surface) border border-(--cryo-frost) rounded-full"
+        class="header-inner px-8 w-full max-w-7xl flex justify-between items-center gap-8 bg-(--cryo-surface) border border-(--cryo-frost) rounded-full transition-all duration-300 ease-in-out"
     >
-        <div class="flex grow items-center gap-1">
+        <div class="flex grow items-center gap-1 cursor-pointer" onclick="window.location.href = '/'">
             <img src="/image/logo.png" class="h-16" />
             <p class="text-xl font-bold">KryoCloud</p>
         </div>
         <div class="flex grow justify-end items-center gap-8">
             {
-                links.map((link) => {
-                    if (link.button) {
-                        return (
-                            <a
-                                href={link.link}
-                                class="px-4 py-2 bg-(--cryo-surface-alt) border border-(--cryo-frost) rounded-lg text-white/50 transition-all duration-300 ease-in-out cursor-pointer hover:text-white hover:font-semibold hover:border-(--cryo-surface-alt)"
-                            >
-                                {link.label}
-                            </a>
-                        );
-                    }
-
-                    return (
-                        <a
-                            href={link.link}
-                            class="text-white/50 transition-all duration-300 ease-in-out cursor-pointer hover:text-white hover:font-semibold"
-                        >
-                            {link.label}
-                        </a>
-                    );
-                })
+                links.map((link) => (
+                    <a
+                        href={link.link}
+                        class:list={[
+                            "text-white/50 transition-all duration-300 ease-in-out cursor-pointer hover:text-white",
+                            link.button && "px-4 py-2 bg-(--cryo-surface-alt) border border-(--cryo-frost) rounded-lg hover:border-(--cryo-surface-alt)",
+                        ]}
+                    >
+                        {link.label}
+                    </a>
+                ))
             }
         </div>
     </div>
 </header>
+
+<style>
+    #site-header.scrolled {
+        padding: 0;
+    }
+
+    #site-header.scrolled .header-inner {
+        max-width: 100%;
+        border-radius: 0;
+        border-left-width: 0;
+        border-right-width: 0;
+        border-top-width: 0;
+        background: color-mix(in srgb, var(--cryo-surface) 80%, transparent);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+    }
+</style>
+
+<script>
+    const header = document.getElementById("site-header");
+    const onScroll = () => {
+        header?.classList.toggle("scrolled", window.scrollY > 20);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+</script>

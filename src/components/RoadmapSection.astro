@@ -1,0 +1,94 @@
+---
+---
+
+<section id="about" class="py-24">
+    <div class="container">
+
+        <!-- header -->
+        <div class="text-center max-w-160 mx-auto mb-16">
+            <span class="inline-block text-xs font-semibold tracking-[0.12em] uppercase text-(--cryo-primary) mb-3">Coming Soon</span>
+            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-tight text-(--cryo-text) mb-4">The ecosystem is just getting started.</h2>
+            <p class="text-[1.0625rem] text-(--cryo-text-soft) leading-[1.7]">
+                We're building the full toolkit around KryoCloud. Here's what's on the roadmap.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-5 max-lg:grid-cols-1">
+
+            <!-- Web Dashboard — "In Development" -->
+            <div class="relative bg-(--cryo-surface) border border-[rgba(111,220,255,0.2)] rounded-(--cryo-radius-lg) p-8 overflow-hidden transition-[border-color] duration-220 hover:border-[rgba(111,220,255,0.4)]">
+                <!-- ambient glow -->
+                <div class="absolute -top-15 -right-15 size-50 rounded-full bg-(--cryo-primary) blur-[80px] opacity-[0.07] pointer-events-none"></div>
+
+                <span class="inline-block px-2.5 py-0.5 text-[0.7rem] font-bold uppercase tracking-[0.08em] rounded-full mb-5 bg-[rgba(111,220,255,0.1)] text-(--cryo-primary) border border-[rgba(111,220,255,0.25)]">In Development</span>
+
+                <div class="size-13 flex items-center justify-center bg-(--cryo-frost) border border-(--cryo-border) rounded-(--cryo-radius-md) mb-4 text-(--cryo-primary)">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                </div>
+
+                <h3 class="text-[1.125rem] font-bold text-(--cryo-text) mb-2.5">Web Dashboard</h3>
+                <p class="text-[0.875rem] text-(--cryo-text-soft) leading-[1.65]">
+                    A full-featured web interface to monitor services, manage groups, inspect logs and
+                    control your entire network — no terminal required.
+                </p>
+
+                <!-- mini dashboard preview -->
+                <div class="mt-5 bg-(--cryo-bg) border border-(--cryo-border) rounded-(--cryo-radius-md) p-4">
+                    <div class="flex gap-4 mb-4">
+                        {[["12","Services"],["3","Groups"],["Online","Node"]].map(([val, key]) => (
+                            <div class="flex flex-col flex-1">
+                                <span class:list={["leading-none font-extrabold", val === "Online" ? "text-[0.8rem] text-(--cryo-success) font-bold" : "text-[1.25rem] text-(--cryo-text)"]}>{val}</span>
+                                <span class="text-[0.7rem] text-(--cryo-text-muted) mt-[0.2rem]">{key}</span>
+                            </div>
+                        ))}
+                    </div>
+                    <div class="flex items-end gap-1 h-12">
+                        {[40,65,55,80,60,72,45].map(h => (
+                            <div class="flex-1 bg-[rgba(111,220,255,0.25)] rounded-t-[3px]" style={`height:${h}%`}></div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Addon Loader — "Planned" -->
+            <div class="relative bg-(--cryo-surface) border border-(--cryo-border) rounded-(--cryo-radius-lg) p-8 overflow-hidden transition-[border-color] duration-220 hover:border-[rgba(138,125,255,0.4)]">
+                <span class="inline-block px-2.5 py-0.5 text-[0.7rem] font-bold uppercase tracking-[0.08em] rounded-full mb-5 bg-[rgba(138,125,255,0.1)] text-(--cryo-accent-soft) border border-[rgba(138,125,255,0.25)]">Planned</span>
+
+                <div class="size-13 flex items-center justify-center bg-(--cryo-frost) border border-(--cryo-border) rounded-(--cryo-radius-md) mb-4 text-(--cryo-accent-soft)">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                </div>
+
+                <h3 class="text-[1.125rem] font-bold text-(--cryo-text) mb-2.5">Addon Loader</h3>
+                <p class="text-[0.875rem] text-(--cryo-text-soft) leading-[1.65]">
+                    Install, update and manage KryoCloud plugins directly from the dashboard or CLI —
+                    no manual JAR dropping required. Dependency resolution included.
+                </p>
+
+                <!-- addon list preview -->
+                <div class="mt-5 flex flex-col gap-2">
+                    {[
+                        { dot: "bg-(--cryo-success)", name: "kryocloud-proxy-bridge", ver: "v1.0.2", update: false },
+                        { dot: "bg-(--cryo-success)", name: "kryocloud-signs",        ver: "v0.9.1", update: false },
+                        { dot: "bg-(--cryo-warning)", name: "kryocloud-notify",       ver: "↑ 1.1.0", update: true },
+                    ].map(({ dot, name, ver, update }) => (
+                        <div class="flex items-center gap-2 px-3 py-2 bg-(--cryo-bg) border border-(--cryo-border) rounded-lg text-[0.8rem] text-(--cryo-text-soft)">
+                            <span class:list={["size-1.75 rounded-full shrink-0", dot]}></span>
+                            <span class="flex-1">{name}</span>
+                            <span class:list={["code-font text-[0.7rem]", update ? "text-(--cryo-warning)" : "text-(--cryo-text-muted)"]}>{ver}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <!-- Unknown -->
+            <div class="relative bg-(--cryo-surface) border border-dashed border-(--cryo-border) rounded-(--cryo-radius-lg) p-8 overflow-hidden flex flex-col items-center justify-center text-center min-h-70 transition-colors duration-220 hover:border-(--cryo-primary) hover:text-(--cryo-primary)">
+                <div class="size-13 flex items-center justify-center bg-(--cryo-frost) border border-dashed border-(--cryo-border) rounded-(--cryo-radius-md) mb-5 text-(--cryo-text-muted)">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg>
+                </div>
+                <p class="text-[1.5rem] font-bold text-(--cryo-text-muted) tracking-[0.25em] mb-2">???</p>
+                <p class="text-[0.8125rem] text-(--cryo-text-muted) max-w-45 leading-relaxed">Something is brewing. Stay tuned.</p>
+            </div>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,170 @@
+---
+---
+
+<!-- shared inner-card code styling handled via .feature-code in <style> below -->
+
+<section id="features" class="py-24">
+    <div class="container">
+
+        <!-- header -->
+        <div class="text-center max-w-160 mx-auto mb-16">
+            <span class="inline-block text-xs font-semibold tracking-[0.12em] uppercase text-(--cryo-primary) mb-3">Core Features</span>
+            <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-tight text-(--cryo-text) mb-4">Everything your network needs.</h2>
+            <p class="text-[1.0625rem] text-(--cryo-text-soft) leading-[1.7]">
+                Built from the ground up for Minecraft networks that need reliability,
+                speed, and full control over their infrastructure.
+            </p>
+        </div>
+
+        <!-- grid -->
+        <div class="grid grid-cols-3 gap-5 lg:grid-cols-2 max-sm:grid-cols-1">
+
+            <!-- Node & Wrapper — wide card -->
+            <div class="col-span-2 max-sm:col-span-1 bg-(--cryo-surface) border border-(--cryo-border) rounded-(--cryo-radius-lg) p-7 transition-[border-color,box-shadow] duration-220 hover:border-[rgba(111,220,255,0.3)] hover:shadow-[0_0_32px_rgba(111,220,255,0.06)]">
+                <div class="size-10.5 flex items-center justify-center bg-(--cryo-frost) border border-(--cryo-border) rounded-(--cryo-radius-sm) mb-4 text-(--cryo-primary)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                </div>
+                <h3 class="text-[1.0625rem] font-bold text-(--cryo-text) mb-2.5">Node &amp; Wrapper Architecture</h3>
+                <p class="text-[0.9rem] text-(--cryo-text-soft) leading-[1.65]">
+                    A central <strong class="text-(--cryo-primary) font-semibold">Node</strong> orchestrates your entire network.
+                    <strong class="text-(--cryo-primary) font-semibold">Wrappers</strong> spawn and control individual services across
+                    multiple machines. Run everything on one host or distribute across your infrastructure — same config, same API.
+                </p>
+                <!-- arch diagram -->
+                <div class="flex items-center gap-3 mt-5">
+                    <div class="px-4 py-2 bg-[rgba(111,220,255,0.1)] border border-(--cryo-primary) rounded-(--cryo-radius-sm) text-[0.8125rem] font-bold text-(--cryo-primary) whitespace-nowrap">Node</div>
+                    <div class="flex flex-col gap-1.5 flex-1 opacity-40">
+                        <div class="h-px bg-[linear-gradient(to_right,var(--cryo-primary),transparent)]"></div>
+                        <div class="h-px bg-[linear-gradient(to_right,var(--cryo-primary),transparent)]"></div>
+                        <div class="h-px bg-[linear-gradient(to_right,var(--cryo-primary),transparent)]"></div>
+                    </div>
+                    <div class="flex flex-col gap-1.5 flex-2]">
+                        {[["Wrapper 1","Lobby · Survival"],["Wrapper 2","Proxy"],["Wrapper 3","Minigames"]].map(([w, s]) => (
+                            <div class="px-3 py-1.5 bg-(--cryo-surface-alt) border border-(--cryo-border) rounded-md text-[0.75rem] text-(--cryo-text-soft) leading-[1.4]">
+                                {w}<br/><span class="text-[0.7rem] text-(--cryo-text-muted)">{s}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Smart Service Groups -->
+            <div class="bg-(--cryo-surface) border border-(--cryo-border) rounded-(--cryo-radius-lg) p-7 transition-[border-color,box-shadow] duration-220 hover:border-[rgba(111,220,255,0.3)] hover:shadow-[0_0_32px_rgba(111,220,255,0.06)]">
+                <div class="size-10.5 flex items-center justify-center bg-(--cryo-frost) border border-(--cryo-border) rounded-(--cryo-radius-sm) mb-4 text-(--cryo-primary)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </div>
+                <h3 class="text-[1.0625rem] font-bold text-(--cryo-text) mb-2.5">Smart Service Groups</h3>
+                <p class="text-[0.9rem] text-(--cryo-text-soft) leading-[1.65]">
+                    Define groups with min/max service counts, memory limits, and auto-scale thresholds.
+                    KryoCloud automatically starts new services when usage exceeds your configured
+                    <code class="feature-code">startNewPercent</code> — no manual intervention required.
+                </p>
+                <!-- scale bar demo -->
+                <div class="mt-5 flex flex-col gap-1.5">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[0.75rem] text-(--cryo-text-muted)">Usage</span>
+                        <div class="flex items-center gap-1.5">
+                            <span class="text-[0.75rem] font-bold text-(--cryo-primary)">82%</span>
+                            <span class="text-[0.7rem] text-(--cryo-success) font-semibold">↑ Spawning</span>
+                        </div>
+                    </div>
+                    <div class="relative h-2 bg-(--cryo-frost-strong) rounded-full overflow-visible">
+                        <div class="h-full w-[82%] bg-(--cryo-gradient-primary) rounded-full"></div>
+                        <div class="absolute -top-0.75 left-[80%] w-0.5 h-3.5 bg-(--cryo-warning) rounded-sm -translate-x-1/2"></div>
+                    </div>
+                    <span class="text-[0.7rem] text-(--cryo-text-muted)">Threshold at 80% — new service spawning</span>
+                </div>
+            </div>
+
+            <!-- Auto Forwarding -->
+            <div class="bg-(--cryo-surface) border border-(--cryo-border) rounded-(--cryo-radius-lg) p-7 transition-[border-color,box-shadow] duration-220 hover:border-[rgba(111,220,255,0.3)] hover:shadow-[0_0_32px_rgba(111,220,255,0.06)]">
+                <div class="size-10.5 flex items-center justify-center bg-(--cryo-frost) border border-(--cryo-border) rounded-(--cryo-radius-sm) mb-4 text-(--cryo-primary)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3 class="text-[1.0625rem] font-bold text-(--cryo-text) mb-2.5">Auto Forwarding Setup</h3>
+                <p class="text-[0.9rem] text-(--cryo-text-soft) leading-[1.65]">
+                    Velocity modern forwarding and BungeeCord legacy forwarding — both supported.
+                    Set to <code class="feature-code">AUTO</code> and KryoCloud detects your proxy software and configures
+                    the shared secret automatically across all services.
+                </p>
+                <div class="flex flex-wrap gap-2 mt-5">
+                    {["Velocity","BungeeCord","Waterfall","Flamecord"].map(name => (
+                        <span class="px-3 py-1 rounded-full text-[0.75rem] font-semibold border bg-[rgba(111,220,255,0.08)] border-[rgba(111,220,255,0.3)] text-(--cryo-primary)">{name}</span>
+                    ))}
+                </div>
+            </div>
+
+            <!-- Template System -->
+            <div class="bg-(--cryo-surface) border border-(--cryo-border) rounded-(--cryo-radius-lg) p-7 transition-[border-color,box-shadow] duration-220 hover:border-[rgba(111,220,255,0.3)] hover:shadow-[0_0_32px_rgba(111,220,255,0.06)]">
+                <div class="size-10.5 flex items-center justify-center bg-(--cryo-frost) border border-(--cryo-border) rounded-(--cryo-radius-sm) mb-4 text-(--cryo-primary)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                </div>
+                <h3 class="text-[1.0625rem] font-bold text-(--cryo-text) mb-2.5">Template System</h3>
+                <p class="text-[0.9rem] text-(--cryo-text-soft) leading-[1.65]">
+                    Every service group is backed by a template. Persistent static services keep their directory
+                    across restarts; ephemeral services get a fresh copy every launch — the right model for
+                    proxies vs. minigame servers.
+                </p>
+            </div>
+
+            <!-- Service Lifecycle -->
+            <div class="bg-(--cryo-surface) border border-(--cryo-border) rounded-(--cryo-radius-lg) p-7 transition-[border-color,box-shadow] duration-220 hover:border-[rgba(111,220,255,0.3)] hover:shadow-[0_0_32px_rgba(111,220,255,0.06)]">
+                <div class="size-10.5 flex items-center justify-center bg-(--cryo-frost) border border-(--cryo-border) rounded-(--cryo-radius-sm) mb-4 text-(--cryo-primary)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <h3 class="text-[1.0625rem] font-bold text-(--cryo-text) mb-2.5">Service Lifecycle</h3>
+                <p class="text-[0.9rem] text-(--cryo-text-soft) leading-[1.65]">
+                    Full state tracking from <code class="feature-code">PREPARING</code> through
+                    <code class="feature-code">RUNNING</code> to <code class="feature-code">STOPPED</code>.
+                    Your plugins react to every transition via typed events on the event bus — no polling needed.
+                </p>
+                <div class="flex items-center flex-wrap gap-1.5 mt-5">
+                    <span class="px-2.5 py-0.5 rounded-md text-[0.7rem] font-semibold bg-[rgba(255,214,111,0.1)] text-(--cryo-warning) border border-[rgba(255,214,111,0.25)]">Preparing</span>
+                    <span class="text-[0.75rem] text-(--cryo-text-muted)">→</span>
+                    <span class="px-2.5 py-0.5 rounded-md text-[0.7rem] font-semibold bg-[rgba(111,220,255,0.1)] text-(--cryo-primary) border border-[rgba(111,220,255,0.25)]">Starting</span>
+                    <span class="text-[0.75rem] text-(--cryo-text-muted)">→</span>
+                    <span class="px-2.5 py-0.5 rounded-md text-[0.7rem] font-semibold bg-[rgba(79,255,176,0.1)] text-(--cryo-success) border border-[rgba(79,255,176,0.25)]">Running</span>
+                    <span class="text-[0.75rem] text-(--cryo-text-muted)">→</span>
+                    <span class="px-2.5 py-0.5 rounded-md text-[0.7rem] font-semibold bg-[rgba(100,128,153,0.1)] text-(--cryo-text-muted) border border-[rgba(100,128,153,0.2)]">Stopped</span>
+                </div>
+            </div>
+
+            <!-- Version Management -->
+            <div class="bg-(--cryo-surface) border border-(--cryo-border) rounded-(--cryo-radius-lg) p-7 transition-[border-color,box-shadow] duration-220 hover:border-[rgba(111,220,255,0.3)] hover:shadow-[0_0_32px_rgba(111,220,255,0.06)]">
+                <div class="size-10.5 flex items-center justify-center bg-(--cryo-frost) border border-(--cryo-border) rounded-(--cryo-radius-sm) mb-4 text-(--cryo-primary)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                </div>
+                <h3 class="text-[1.0625rem] font-bold text-(--cryo-text) mb-2.5">Version Management</h3>
+                <p class="text-[0.9rem] text-(--cryo-text-soft) leading-[1.65]">
+                    Point to <code class="feature-code">latest</code> or pin a specific version — KryoCloud downloads
+                    and installs your server software automatically before first start.
+                    Paper, Velocity, BungeeCord and more — handled.
+                </p>
+            </div>
+
+            <!-- Software Support -->
+            <div class="bg-(--cryo-surface) border border-(--cryo-border) rounded-(--cryo-radius-lg) p-7 transition-[border-color,box-shadow] duration-220 hover:border-[rgba(111,220,255,0.3)] hover:shadow-[0_0_32px_rgba(111,220,255,0.06)]">
+                <div class="size-10.5 flex items-center justify-center bg-(--cryo-frost) border border-(--cryo-border) rounded-(--cryo-radius-sm) mb-4 text-(--cryo-primary)">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                </div>
+                <h3 class="text-[1.0625rem] font-bold text-(--cryo-text) mb-2.5">Software Support</h3>
+                <p class="text-[0.9rem] text-(--cryo-text-soft) leading-[1.65]">
+                    Since no plugin is required on backend servers, anything compatible with Velocity or BungeeCord works out of the box.
+                    For standalone services, any Java software runs.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    .feature-code {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8em;
+        color: var(--cryo-primary-light);
+        background: var(--cryo-frost);
+        padding: 0.1em 0.4em;
+        border-radius: 4px;
+    }
+</style>

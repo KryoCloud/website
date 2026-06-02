@@ -1,0 +1,96 @@
+---
+import CodeWindow from "./CodeWindow.astro";
+
+const checkFeatures = [
+    "Access services, groups, wrappers, templates & versions via typed controllers",
+    "Subscribe to typed cloud events — no reflection magic, no XML configs",
+    "Built-in scheduler, logger, messenger and data directory per plugin",
+    "Works both inside a cloud service and as a standalone cloud plugin",
+    { text: "Async-first with ", code: "CompletableFuture", suffix: " throughout the entire API" },
+];
+
+const codeEvents = [
+    `<span class="c-comment">// Subscribe to any cloud event</span>`,
+    `<span class="c-cls">CloudAPI</span>.<span class="c-fn">events</span><span class="c-paren">()</span>.<span class="c-fn">subscribe</span><span class="c-paren">(</span>`,
+    `    <span class="c-cls">GroupScaledEvent</span>.<span class="c-kw">class</span><span class="c-paren">,</span>`,
+    `    e <span class="c-op">-&gt;</span> notifyPlayers<span class="c-paren">(</span>e.<span class="c-fn">group</span><span class="c-paren">())</span>`,
+    `<span class="c-paren">)</span>;`,
+].join("\n");
+
+const codeServices = [
+    `<span class="c-comment">// Control services from anywhere</span>`,
+    `<span class="c-cls">CloudAPI</span>.<span class="c-fn">services</span><span class="c-paren">()</span>`,
+    `    .<span class="c-fn">byGroup</span><span class="c-paren">(</span><span class="c-str">"Lobby"</span><span class="c-paren">)</span>`,
+    `    .<span class="c-fn">thenAccept</span><span class="c-paren">(</span>list <span class="c-op">-&gt;</span>`,
+    `        list.<span class="c-fn">forEach</span><span class="c-paren">(</span><span class="c-cls">IService</span>::<span class="c-fn">stop</span><span class="c-paren">)</span>`,
+    `    <span class="c-paren">)</span>;`,
+].join("\n");
+
+const codeIdentity = [
+    `<span class="c-comment">// Know where you are</span>`,
+    `<span class="c-kw">if</span> <span class="c-paren">(</span><span class="c-cls">CloudAPI</span>.<span class="c-fn">runningInCloud</span><span class="c-paren">())</span> <span class="c-paren">{</span>`,
+    `    <span class="c-cls">String</span> groupName <span class="c-op">=</span> <span class="c-cls">CloudAPI</span>.<span class="c-fn">groupName</span><span class="c-paren">()</span>;`,
+    `    <span class="c-cls">String</span> serviceName <span class="c-op">=</span> <span class="c-cls">CloudAPI</span>.<span class="c-fn">serviceName</span><span class="c-paren">()</span>;`,
+    `<span class="c-paren">}</span>`,
+].join("\n");
+---
+
+<section id="api" class="py-24 bg-(--cryo-surface) border-y border-(--cryo-border)">
+    <div class="container">
+        <div class="grid grid-cols-2 gap-16 items-center max-md:grid-cols-1 max-md:gap-10">
+
+            <!-- left: content -->
+            <div>
+                <span class="inline-block text-xs font-semibold tracking-[0.12em] uppercase text-(--cryo-primary) mb-3">Plugin API</span>
+                <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-tight text-(--cryo-text) mb-4">
+                    Simple. Powerful. <span class="gradient-text">Just works.</span>
+                </h2>
+                <p class="text-[1.0625rem] text-(--cryo-text-soft) leading-[1.7]">
+                    The KryoCloud Plugin API is designed to be the least friction possible
+                    between your idea and a working extension. One annotation, one interface,
+                    and you have access to the entire cloud.
+                </p>
+
+                <!-- feature list -->
+                <ul class="flex flex-col gap-3 my-7">
+                    {checkFeatures.map(f => (
+                        <li class="flex items-start gap-2.5 text-[0.9rem] text-(--cryo-text-soft) leading-normal">
+                            <svg class="shrink-0 mt-0.5 text-(--cryo-success)" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                            <span>
+                                {typeof f === 'string' ? f : (
+                                    <>{f.text}<code class="api-code">{f.code}</code>{f.suffix}</>
+                                )}
+                            </span>
+                        </li>
+                    ))}
+                </ul>
+
+                <!-- dependency snippet -->
+                <div class="flex items-center gap-3 px-4 py-3 bg-(--cryo-surface-alt) border border-(--cryo-border) rounded-(--cryo-radius-md) flex-wrap">
+                    <span class="text-[0.7rem] font-bold uppercase tracking-widest text-(--cryo-primary) bg-[rgba(111,220,255,0.1)] px-2 py-[0.2em] rounded">Maven</span>
+                    <code class="code-font text-[0.8125rem] text-(--cryo-text-soft) flex-1">eu.kryocloud:kryocloud-api:1.0.0-alpha.1</code>
+                    <a href="https://docs.kryocloud.eu" class="text-[0.8125rem] font-semibold text-(--cryo-primary) no-underline hover:underline">Docs →</a>
+                </div>
+            </div>
+
+            <!-- right: code panels -->
+            <div class="flex flex-col gap-3.5">
+                <CodeWindow filename="Events"   bg="bg" radius="md" code={codeEvents} />
+                <CodeWindow filename="Services" bg="bg" radius="md" code={codeServices} />
+                <CodeWindow filename="Identity" bg="bg" radius="md" code={codeIdentity} />
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<style>
+    .api-code {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.8em;
+        color: var(--cryo-primary-light);
+        background: var(--cryo-frost);
+        padding: 0.1em 0.4em;
+        border-radius: 4px;
+    }
+</style>

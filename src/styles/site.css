@@ -6,7 +6,6 @@
 }
 
 @layer base {
-
     :root {
         /* === Core Colors === */
         --cryo-bg: #060b14;
@@ -40,33 +39,15 @@
         --cryo-info: #72dfff;
 
         /* === Shadows === */
-        --cryo-shadow-sm:
-            0 2px 8px rgba(0, 0, 0, 0.25);
-
-        --cryo-shadow-md:
-            0 4px 18px rgba(0, 0, 0, 0.35);
-
-        --cryo-shadow-lg:
-            0 8px 32px rgba(0, 0, 0, 0.5);
-
-        --cryo-shadow-glow:
-            0 0 20px rgba(111, 220, 255, 0.35);
+        --cryo-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
+        --cryo-shadow-md: 0 4px 18px rgba(0, 0, 0, 0.35);
+        --cryo-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+        --cryo-shadow-glow: 0 0 20px rgba(111, 220, 255, 0.35);
 
         /* === Gradients === */
-        --cryo-gradient-primary:
-            linear-gradient(135deg,
-                #6fdcff 0%,
-                #8a7dff 100%);
-
-        --cryo-gradient-surface:
-            linear-gradient(180deg,
-                #0d1524 0%,
-                #09111d 100%);
-
-        --cryo-gradient-frost:
-            linear-gradient(135deg,
-                rgba(255, 255, 255, 0.06) 0%,
-                rgba(180, 235, 255, 0.02) 100%);
+        --cryo-gradient-primary: linear-gradient(135deg, #6fdcff 0%, #8a7dff 100%);
+        --cryo-gradient-surface: linear-gradient(180deg, #0d1524 0%, #09111d 100%);
+        --cryo-gradient-frost: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(180,235,255,0.02) 100%);
 
         /* === Glass Blur === */
         --cryo-blur: blur(18px);
@@ -82,10 +63,9 @@
         --cryo-transition-normal: 220ms ease;
         --cryo-transition-slow: 420ms ease;
 
-        /* === Optional RGB Helpers === */
-        --cryo-primary-rgb: 111, 220, 255;
-        --cryo-accent-rgb: 138, 125, 255;
-        --cryo-bg-rgb: 6, 11, 20;
+        /* === TW4 color token mappings === */
+        --color-background: var(--cryo-bg);
+        --color-text: var(--cryo-text);
     }
 
     *,
@@ -98,7 +78,100 @@
         color: white;
     }
 
+    html {
+        scrollbar-width: none;
+        overflow-x: clip;
+    }
+
     body {
-        @apply w-screen min-h-screen bg-(--cryo-bg)
+        min-height: 100vh;
+        background-color: var(--cryo-bg);
+        overflow-x: clip;
+    }
+
+    ::selection {
+        background-color: rgba(111, 220, 255, 0.45);
+        color: #ffffff;
+        text-shadow: 0 0 16px rgba(111, 220, 255, 0.9);
     }
 }
+
+/* ── Layout helpers ───────────────────────────────────────────── */
+@layer components {
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    /* Gradient text — requires -webkit-background-clip which TW doesn't expose cleanly */
+    .gradient-text {
+        background: var(--cryo-gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Shared button styles */
+    .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: var(--cryo-gradient-primary);
+        font-weight: 700;
+        font-size: 0.9375rem;
+        border-radius: var(--cryo-radius-md);
+        text-decoration: none;
+        transition: opacity var(--cryo-transition-fast), transform var(--cryo-transition-fast);
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary--lg { padding: 0.875rem 2rem; font-size: 1rem; }
+
+    .btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background: transparent;
+        color: var(--cryo-text-soft);
+        font-weight: 600;
+        font-size: 0.9375rem;
+        border: 1px solid var(--cryo-border);
+        border-radius: var(--cryo-radius-md);
+        text-decoration: none;
+        transition: color var(--cryo-transition-fast), border-color var(--cryo-transition-fast);
+    }
+    .btn-ghost:hover { color: var(--cryo-text); border-color: var(--cryo-primary); }
+    .btn-ghost--lg { padding: 0.875rem 2rem; font-size: 1rem; }
+
+    /* Monospace font stack for code blocks */
+    .code-font {
+        font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    }
+}
+
+/* ── Animations ───────────────────────────────────────────────── */
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ── Syntax highlighting ──────────────────────────────────────── */
+.c-annotation { color: #c792ea; }
+.c-kw         { color: #89ddff; }
+.c-cls        { color: #6fdcff; }
+.c-fn         { color: #82aaff; }
+.c-str        { color: #c3e88d; }
+.c-op         { color: #89ddff; }
+.c-paren      { color: var(--cryo-text-soft); }
+.c-comment    { color: var(--cryo-text-muted); font-style: italic; }
+
+/* ── Console highlighting ─────────────────────────────────────── */
+.con-primary { color: var(--cryo-primary); }
+.con-success { color: var(--cryo-success); }
+.con-warn    { color: var(--cryo-warning); }
+.con-error   { color: var(--cryo-danger); }
+.con-muted   { color: var(--cryo-text-muted); }
+.con-cls     { color: var(--cryo-primary-light); }
+.con-bold    { color: var(--cryo-text); font-weight: 700; }

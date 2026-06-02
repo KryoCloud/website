@@ -1,8 +1,26 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import HeroSection from "../components/HeroSection.astro";
+import StatsBar from "../components/StatsBar.astro";
+import FeaturesSection from "../components/FeaturesSection.astro";
+import PluginApiSection from "../components/PluginApiSection.astro";
+import RoadmapSection from "../components/RoadmapSection.astro";
+import CtaSection from "../components/CtaSection.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 ---
 
-<SiteLayout title="Home ✻ KryoCloud">
+<SiteLayout title="KryoCloud — Modern Minecraft Cloud System">
     <SiteHeader slot="header" />
+
+    <main slot="main">
+        <HeroSection />
+        <StatsBar />
+        <FeaturesSection />
+        <PluginApiSection />
+        <RoadmapSection />
+        <CtaSection />
+    </main>
+
+    <SiteFooter slot="footer" />
 </SiteLayout>

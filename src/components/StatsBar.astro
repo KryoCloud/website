@@ -1,0 +1,26 @@
+---
+const stats = [
+    { number: "3",   label: "Service Types" },
+    { number: "6",   label: "Service States" },
+    { number: "10+", label: "API Controllers" },
+    { number: "∞",   label: "Extensible via Plugins" },
+];
+---
+
+<section class="py-6 border-y border-(--cryo-border) bg-(--cryo-surface)">
+    <div class="container">
+        <div class="flex items-center justify-center flex-wrap">
+            {stats.map((stat, i) => (
+                <>
+                    <div class="flex flex-col items-center px-12 py-2 max-sm:px-6">
+                        <span class="text-[1.75rem] font-extrabold leading-none gradient-text">{stat.number}</span>
+                        <span class="text-[0.8125rem] text-(--cryo-text-muted) mt-1">{stat.label}</span>
+                    </div>
+                    {i < stats.length - 1 && (
+                        <div class="w-px h-10 bg-(--cryo-border)"></div>
+                    )}
+                </>
+            ))}
+        </div>
+    </div>
+</section>

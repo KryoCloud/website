@@ -1,0 +1,24 @@
+---
+interface Props {
+    filename: string;
+    class?: string;
+    bg?: 'surface' | 'bg';
+    radius?: 'md' | 'lg';
+    /** Pass syntax-highlighted HTML here; newlines are preserved via set:html */
+    code: string;
+}
+
+const { filename, class: className = '', bg = 'surface', radius = 'lg', code } = Astro.props;
+const codeBg = bg === 'bg' ? 'bg-(--cryo-bg)' : 'bg-(--cryo-surface)';
+const rounded = radius === 'md' ? 'rounded-(--cryo-radius-md)' : 'rounded-(--cryo-radius-lg)';
+---
+
+<div class:list={["border border-(--cryo-border) overflow-hidden", codeBg, rounded, className]}>
+    <div class="flex items-center gap-1.5 px-4 py-3 bg-(--cryo-surface-alt) border-b border-(--cryo-border)">
+        <span class="size-2.5 rounded-full bg-[#ff5f57]"></span>
+        <span class="size-2.5 rounded-full bg-[#febc2e]"></span>
+        <span class="size-2.5 rounded-full bg-[#28c840]"></span>
+        <span class="ml-2 code-font text-[0.8125rem] text-(--cryo-text-muted)">{filename}</span>
+    </div>
+    <pre class="m-0 px-6 py-5 overflow-x-auto code-font text-[0.8125rem] leading-[1.8] bg-transparent"><code set:html={code} /></pre>
+</div>

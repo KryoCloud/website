@@ -30,9 +30,9 @@ const {
     <meta name="description" content={description} />
   </head>
   <body
-    class="bg-background text-text antialiased selection:bg-primary selection:text-white"
+    class="bg-background text-text antialiased"
   >
-    <div class="flex flex-col min-h-screen">
+    <div class="flex flex-col min-h-screen overflow-x-clip">
       <slot name="header" />
       <slot name="main" />
       <slot name="footer" />

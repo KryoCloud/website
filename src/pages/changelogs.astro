@@ -1,0 +1,199 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+type Tag = "feature" | "fix" | "improvement" | "breaking" | "security" | "performance";
+
+interface ChangeEntry {
+    type: Tag;
+    text: string;
+}
+
+interface Release {
+    version: string;
+    date: string;
+    title: string;
+    description?: string;
+    changes: ChangeEntry[];
+}
+
+const releases: Release[] = [
+    {
+        version: "1.0.0-beta.1",
+        date: "2025-06-01",
+        title: "Public Beta",
+        description: "KryoCloud is now in public beta. The core system is stable and ready for testing on real networks.",
+        changes: [
+            { type: "feature",     text: "Public beta release — core node, wrapper and service lifecycle are stable" },
+            { type: "feature",     text: "Automatic Temurin JDK provisioning before first service start" },
+            { type: "feature",     text: "Web endpoint reservation for future dashboard integration (127.0.0.1:8080)" },
+            { type: "improvement", text: "Console intro sequence now displays all loaded subsystems with status" },
+            { type: "improvement", text: "Wrapper registration logs now include remote address and session UUID" },
+            { type: "fix",         text: "PluginGateway no longer crashes the node when port is already in use" },
+            { type: "fix",         text: "Service PREPARING state could hang indefinitely on slow file systems" },
+            { type: "fix",         text: "Auto-start count was off-by-one when multiple groups had minCount > 1" },
+        ],
+    },
+    {
+        version: "1.0.0-alpha.3",
+        date: "2025-04-18",
+        title: "Service Lifecycle & Events",
+        description: "Full service lifecycle tracking and the typed event bus are now available to plugins.",
+        changes: [
+            { type: "feature",     text: "Typed event bus — subscribe to GroupScaledEvent, ServiceStateChangedEvent and more" },
+            { type: "feature",     text: "Service states: PREPARING → STARTING → RUNNING → STOPPING → STOPPED" },
+            { type: "feature",     text: "CloudAPI.runningInCloud() / groupName() / serviceName() identity helpers" },
+            { type: "feature",     text: "Per-plugin data directory injected via PluginContext" },
+            { type: "improvement", text: "Plugin lifecycle methods now propagate exceptions properly instead of swallowing them" },
+            { type: "improvement", text: "Screen name for Minecraft instances now includes a short UUID suffix to avoid collisions" },
+            { type: "fix",         text: "Services spawned on secondary wrappers did not receive forwarding config" },
+            { type: "fix",         text: "Version manifest cache was invalidated on every restart" },
+            { type: "performance", text: "Event dispatch is now async and no longer blocks the main scheduler thread" },
+        ],
+    },
+    {
+        version: "1.0.0-alpha.2",
+        date: "2025-03-07",
+        title: "Plugin API & Forwarding",
+        description: "The plugin API reaches its first usable form, alongside automatic proxy forwarding setup.",
+        changes: [
+            { type: "feature",     text: "@CloudPlugin annotation — one annotation to register any cloud plugin" },
+            { type: "feature",     text: "CloudAPI.services() / groups() / wrappers() / versions() typed controllers" },
+            { type: "feature",     text: "Auto forwarding mode: detects Velocity or BungeeCord and writes shared secret automatically" },
+            { type: "feature",     text: "Support for Waterfall and Flamecord forwarding in AUTO mode" },
+            { type: "feature",     text: "startNewPercent threshold — node auto-spawns services when group usage exceeds it" },
+            { type: "improvement", text: "kryocloud-api Maven artifact published to eu.kryocloud namespace" },
+            { type: "improvement", text: "Wrapper now streams service stdout back to the node console in real time" },
+            { type: "fix",         text: "Template copy occasionally left file handles open on Windows hosts" },
+            { type: "breaking",    text: "ICloudPlugin.onLoad() renamed to enable(PluginContext) — update all existing plugins" },
+        ],
+    },
+    {
+        version: "1.0.0-alpha.1",
+        date: "2025-01-22",
+        title: "Initial Alpha",
+        description: "First internal alpha. Node, wrapper and basic service management are functional.",
+        changes: [
+            { type: "feature",     text: "Node process — central orchestrator for the entire network" },
+            { type: "feature",     text: "Wrapper process — spawns and monitors services on any host" },
+            { type: "feature",     text: "Service group configuration: minCount, maxCount, maxMemory, maxPlayers" },
+            { type: "feature",     text: "Template system: static (persistent) and dynamic (fresh copy per launch) modes" },
+            { type: "feature",     text: "Version management: point to 'latest' or pin a specific version string" },
+            { type: "feature",     text: "Node–Wrapper communication over configurable TCP port (default 1130)" },
+            { type: "feature",     text: "PaperMC, Velocity and BungeeCord software manifests built in" },
+            { type: "improvement", text: "Protocol handshake validates wrapper version before accepting connection" },
+        ],
+    },
+];
+
+const tagStyles: Record<Tag, string> = {
+    feature:     "bg-[rgba(111,220,255,0.08)] text-(--cryo-primary)     border-[rgba(111,220,255,0.25)]",
+    fix:         "bg-[rgba(255,111,145,0.08)] text-(--cryo-danger)      border-[rgba(255,111,145,0.25)]",
+    improvement: "bg-[rgba(138,125,255,0.08)] text-(--cryo-accent-soft) border-[rgba(138,125,255,0.25)]",
+    breaking:    "bg-[rgba(255,214,111,0.08)] text-(--cryo-warning)     border-[rgba(255,214,111,0.25)]",
+    security:    "bg-[rgba(79,255,176,0.08)]  text-(--cryo-success)     border-[rgba(79,255,176,0.25)]",
+    performance: "bg-[rgba(114,223,255,0.08)] text-(--cryo-info)        border-[rgba(114,223,255,0.25)]",
+};
+
+const tagLabel: Record<Tag, string> = {
+    feature:     "Feature",
+    fix:         "Fix",
+    improvement: "Improvement",
+    breaking:    "Breaking",
+    security:    "Security",
+    performance: "Performance",
+};
+---
+
+<SiteLayout title="Changelog — KryoCloud" description="Release history and version notes for KryoCloud.">
+    <SiteHeader slot="header" />
+
+    <main slot="main">
+        <div style="height: var(--header-h, 10rem)"></div>
+        <div class="container">
+
+            <!-- page header -->
+            <div class="mb-16">
+                <span class="inline-block text-xs font-semibold tracking-[0.12em] uppercase text-(--cryo-primary) mb-3">Changelog</span>
+                <h1 class="text-[clamp(2rem,4vw,3rem)] font-extrabold text-(--cryo-text) tracking-[-0.02em] mb-3">Release history</h1>
+                <p class="text-[1.0625rem] text-(--cryo-text-soft) leading-[1.7] max-w-xl">
+                    Every release, every fix, every breaking change — documented here.
+                </p>
+            </div>
+
+            <!-- timeline -->
+            <div class="relative">
+                <!-- vertical line -->
+                <div class="absolute mt-2 top-0 bottom-0 left-1.5 w-px bg-(--cryo-border) max-md:hidden"></div>
+
+                <div class="flex flex-col gap-16 pb-16">
+                    {releases.map((release, i) => (
+                        <div class="flex gap-10 max-md:gap-0">
+
+                            <!-- timeline dot -->
+                            <div class="relative shrink-0 max-md:hidden">
+                                <div class:list={[
+                                    "size-3.5 rounded-full border-2 mt-1.5",
+                                    i === 0
+                                        ? "bg-(--cryo-primary) border-(--cryo-primary) shadow-[0_0_10px_rgba(111,220,255,0.5)]"
+                                        : "bg-(--cryo-bg) border-(--cryo-border)",
+                                ]}></div>
+                            </div>
+
+                            <!-- release card -->
+                            <div class="flex-1 bg-(--cryo-surface) border border-(--cryo-border) rounded-(--cryo-radius-lg) p-8 hover:border-[rgba(111,220,255,0.25)] transition-colors duration-220">
+
+                                <!-- header row -->
+                                <div class="flex items-start justify-between gap-4 flex-wrap mb-5">
+                                    <div class="flex items-center gap-3 flex-wrap">
+                                        <span class:list={[
+                                            "code-font text-sm font-bold px-3 py-1 rounded-full border",
+                                            i === 0
+                                                ? "bg-[rgba(111,220,255,0.1)] text-(--cryo-primary) border-[rgba(111,220,255,0.3)]"
+                                                : "bg-(--cryo-frost) text-(--cryo-text-soft) border-(--cryo-border)",
+                                        ]}>
+                                            {release.version}
+                                        </span>
+                                        {i === 0 && (
+                                            <span class="text-[0.7rem] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-[rgba(79,255,176,0.1)] text-(--cryo-success) border border-[rgba(79,255,176,0.25)]">
+                                                Latest
+                                            </span>
+                                        )}
+                                        <h2 class="text-lg font-bold text-(--cryo-text)">{release.title}</h2>
+                                    </div>
+                                    <time class="text-sm text-(--cryo-text-muted) shrink-0">{release.date}</time>
+                                </div>
+
+                                {release.description && (
+                                    <p class="text-[0.9375rem] text-(--cryo-text-soft) leading-[1.7] mb-6 pb-6 border-b border-(--cryo-border)">
+                                        {release.description}
+                                    </p>
+                                )}
+
+                                <!-- change list -->
+                                <ul class="flex flex-col gap-3">
+                                    {release.changes.map(({ type, text }) => (
+                                        <li class="flex items-start gap-3">
+                                            <span class:list={[
+                                                "shrink-0 mt-0.5 text-[0.65rem] font-bold uppercase tracking-widest px-2 py-0.5 rounded border whitespace-nowrap",
+                                                tagStyles[type],
+                                            ]}>
+                                                {tagLabel[type]}
+                                            </span>
+                                            <span class="text-[0.9rem] text-(--cryo-text-soft) leading-[1.6]">{text}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <SiteFooter slot="footer" />
+</SiteLayout>
