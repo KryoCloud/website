@@ -35,12 +35,12 @@ const codeIdentity = [
 ].join("\n");
 ---
 
-<section id="api" class="py-24 bg-(--cryo-surface) border-y border-(--cryo-border)">
+<section id="api" class="py-14 md:py-24 bg-(--cryo-surface) border-y border-(--cryo-border)">
     <div class="container">
-        <div class="grid grid-cols-2 gap-16 items-center max-md:grid-cols-1 max-md:gap-10">
+        <div class="grid grid-cols-2 gap-10 md:gap-16 items-center max-md:grid-cols-1">
 
             <!-- left: content -->
-            <div>
+            <div class="animate-on-scroll from-left">
                 <span class="inline-block text-xs font-semibold tracking-[0.12em] uppercase text-(--cryo-primary) mb-3">Plugin API</span>
                 <h2 class="text-[clamp(1.75rem,3vw,2.5rem)] font-bold leading-tight text-(--cryo-text) mb-4">
                     Simple. Powerful. <span class="gradient-text">Just works.</span>
@@ -68,13 +68,13 @@ const codeIdentity = [
                 <!-- dependency snippet -->
                 <div class="flex items-center gap-3 px-4 py-3 bg-(--cryo-surface-alt) border border-(--cryo-border) rounded-(--cryo-radius-md) flex-wrap">
                     <span class="text-[0.7rem] font-bold uppercase tracking-widest text-(--cryo-primary) bg-[rgba(111,220,255,0.1)] px-2 py-[0.2em] rounded">Maven</span>
-                    <code class="code-font text-[0.8125rem] text-(--cryo-text-soft) flex-1">eu.kryocloud:kryocloud-api:1.0.0-alpha.1</code>
-                    <a href="https://docs.kryocloud.eu" class="text-[0.8125rem] font-semibold text-(--cryo-primary) no-underline hover:underline">Docs →</a>
+                    <code class="code-font text-[0.8125rem] text-(--cryo-text-soft) flex-1">eu.kryocloud:kryocloud-plugin-api:1.0.0-beta.1</code>
+                    <a href="https://docs.kryocloud.eu" target="_blank" class="text-[0.8125rem] font-semibold text-(--cryo-primary) no-underline hover:underline">Docs →</a>
                 </div>
             </div>
 
             <!-- right: code panels -->
-            <div class="flex flex-col gap-3.5">
+            <div class="animate-on-scroll from-right flex flex-col gap-3.5">
                 <CodeWindow filename="Events"   bg="bg" radius="md" code={codeEvents} />
                 <CodeWindow filename="Services" bg="bg" radius="md" code={codeServices} />
                 <CodeWindow filename="Identity" bg="bg" radius="md" code={codeIdentity} />

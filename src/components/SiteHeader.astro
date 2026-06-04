@@ -4,6 +4,7 @@ class Link {
         public label: string,
         public link: string,
         public button: boolean = false,
+        public newSite: boolean = false,
     ) {}
 }
 
@@ -11,40 +12,65 @@ const links = [
     new Link("About", "#about"),
     new Link("Features", "#features"),
     new Link("Changelogs", "/changelogs"),
-    new Link("Docs", "https://docs.kryocloud.eu"),
-    new Link("Start now!", "https://docs.kryocloud.eu/getting-started", true),
+    new Link("Docs", "https://docs.kryocloud.eu", false, true),
+    new Link("Start now!", "https://docs.kryocloud.eu/getting-started", true, true),
 ];
 ---
 
-<header id="site-header" class="fixed top-0 left-0 z-50 w-full py-6 px-6 flex justify-center items-center transition-all duration-300 ease-in-out">
-    <div
-        class="header-inner px-8 w-full max-w-7xl flex justify-between items-center gap-8 bg-(--cryo-surface) border border-(--cryo-frost) rounded-full transition-all duration-300 ease-in-out"
-    >
-        <div class="flex grow items-center gap-1 cursor-pointer" onclick="window.location.href = '/'">
-            <img src="/image/logo.png" class="h-16" />
-            <p class="text-xl font-bold">KryoCloud</p>
+<header id="site-header" class="fixed top-0 left-0 z-50 w-full py-4 sm:py-6 flex flex-col justify-center items-center transition-all duration-300 ease-in-out">
+    <div class="header-inner px-5 sm:px-8 w-full max-w-7xl flex justify-between items-center gap-4 sm:gap-8 bg-(--cryo-surface) border border-(--cryo-frost) rounded-full transition-all duration-300 ease-in-out">
+        <!-- logo -->
+        <div class="flex items-center gap-1 cursor-pointer" onclick="window.location.href = '/'">
+            <img src="/image/logo.png" class="h-12 sm:h-16" />
+            <p class="text-lg sm:text-xl font-bold">KryoCloud</p>
         </div>
-        <div class="flex grow justify-end items-center gap-8">
-            {
-                links.map((link) => (
-                    <a
-                        href={link.link}
-                        class:list={[
-                            "text-white/50 transition-all duration-300 ease-in-out cursor-pointer hover:text-white",
-                            link.button && "px-4 py-2 bg-(--cryo-surface-alt) border border-(--cryo-frost) rounded-lg hover:border-(--cryo-surface-alt)",
-                        ]}
-                    >
-                        {link.label}
-                    </a>
-                ))
-            }
+
+        <!-- desktop nav -->
+        <div class="hidden md:flex grow justify-end items-center gap-8">
+            {links.map((link) => (
+                <a
+                    href={link.link}
+                    target={link.newSite ? '_blank' : '_self'}
+                    class:list={[
+                        "text-white/50 transition-all duration-300 ease-in-out cursor-pointer hover:text-white",
+                        link.button && "btn-ghost",
+                    ]}
+                >
+                    {link.label}
+                </a>
+            ))}
         </div>
+
+        <!-- hamburger (mobile only) -->
+        <button id="nav-toggle" class="md:hidden flex items-center justify-center size-9 rounded-(--cryo-radius-sm) text-(--cryo-text-soft) hover:text-white hover:bg-(--cryo-frost) transition-colors" aria-label="Toggle navigation">
+            <svg id="ham-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <svg id="ham-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="hidden"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+
+    <!-- mobile nav panel -->
+    <div id="mobile-nav" class="hidden w-full max-w-7xl mt-2">
+        <nav class="flex flex-col bg-(--cryo-surface) border border-(--cryo-frost) rounded-(--cryo-radius-lg) overflow-hidden p-3 gap-0.5">
+            {links.map((link) => (
+                <a
+                    href={link.link}
+                    target={link.newSite ? '_blank' : '_self'}
+                    class:list={[
+                        "mobile-nav-link px-4 py-3 rounded-(--cryo-radius-sm) font-medium transition-colors",
+                        link.button ? "mobile-nav-btn" : "text-(--cryo-text-soft) hover:text-white hover:bg-(--cryo-frost)",
+                    ]}
+                >
+                    {link.label}
+                </a>
+            ))}
+        </nav>
     </div>
 </header>
 
 <style>
     #site-header.scrolled {
-        padding: 0;
+        padding-top: 0;
+        padding-bottom: 0;
     }
 
     #site-header.scrolled .header-inner {
@@ -57,13 +83,43 @@ const links = [
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
     }
+
+    .mobile-nav-btn {
+        margin-top: 0.25rem;
+        background: var(--cryo-gradient-primary);
+        color: var(--cryo-text);
+        font-weight: 700;
+        text-align: center;
+    }
+    .mobile-nav-btn:hover { opacity: 0.88; }
 </style>
 
 <script>
     const header = document.getElementById("site-header");
+    const toggle = document.getElementById("nav-toggle");
+    const mobileNav = document.getElementById("mobile-nav");
+    const hamOpen = document.getElementById("ham-open");
+    const hamClose = document.getElementById("ham-close");
+
     const onScroll = () => {
         header?.classList.toggle("scrolled", window.scrollY > 20);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
+
+    toggle?.addEventListener("click", () => {
+        const isOpen = !mobileNav?.classList.contains("hidden");
+        mobileNav?.classList.toggle("hidden", isOpen);
+        hamOpen?.classList.toggle("hidden", !isOpen);
+        hamClose?.classList.toggle("hidden", isOpen);
+    });
+
+    // Close mobile nav when a link is clicked
+    mobileNav?.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", () => {
+            mobileNav.classList.add("hidden");
+            hamOpen?.classList.remove("hidden");
+            hamClose?.classList.add("hidden");
+        });
+    });
 </script>
